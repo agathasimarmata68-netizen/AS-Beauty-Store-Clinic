@@ -1,2 +1,2 @@
 # AS-Beauty-Store-Clinic
-beuty store and clinic
+beauty store and clinic
