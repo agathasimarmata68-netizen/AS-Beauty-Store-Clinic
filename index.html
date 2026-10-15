@@ -1,0 +1,574 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AS Beauty Store</title>
+<style>
+:root {
+  --pink: #d85b88;
+  --light-pink: #fff0f5;
+  --dark: #35242c;
+  --muted: #887780;
+  --white: #fff;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fffafc;
+  color: var(--dark);
+}
+header {
+  background: white;
+  padding: 17px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 12px #0000000c;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo { font-size: 23px; font-weight: bold; color: var(--pink); }
+nav { display: flex; gap: 10px; flex-wrap: wrap; }
+button, .nav-btn {
+  border: 0;
+  border-radius: 22px;
+  padding: 11px 17px;
+  cursor: pointer;
+  font-weight: bold;
+  background: var(--light-pink);
+  color: var(--pink);
+}
+button:hover, .nav-btn:hover { opacity: .8; }
+.primary { background: var(--pink); color: white; }
+.hero {
+  padding: 65px 7%;
+  background: linear-gradient(120deg, #fff0f5, #ffe0eb);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.hero-content { max-width: 600px; }
+.hero h1 { font-size: clamp(32px, 5vw, 54px); margin: 10px 0; }
+.hero p { line-height: 1.8; color: #755d68; }
+.hero-art { font-size: 100px; padding: 20px; }
+main { padding: 35px 6%; min-height: 55vh; }
+.section-heading { margin-bottom: 25px; }
+.section-heading h2 { margin-bottom: 8px; }
+.section-heading p { color: var(--muted); }
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+input, select {
+  border: 1px solid #ead8e0;
+  border-radius: 20px;
+  padding: 12px 16px;
+  background: white;
+  font-size: 14px;
+}
+input { flex: 1; min-width: 180px; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+.product {
+  background: white;
+  border: 1px solid #f2e4ea;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform .2s;
+}
+.product:hover { transform: translateY(-4px); }
+.product img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+  background: #fff7fa;
+  padding: 12px;
+}
+.product-body { padding: 17px; }
+.brand {
+  color: var(--pink);
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.product h3 { font-size: 16px; line-height: 1.5; min-height: 48px; }
+.product p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.price { font-weight: bold; font-size: 18px; margin: 15px 0; }
+.product button { width: 100%; }
+.tag {
+  display: inline-block;
+  background: var(--light-pink);
+  color: var(--pink);
+  border-radius: 20px;
+  padding: 5px 9px;
+  font-size: 11px;
+}
+.page { display: none; }
+.page.active { display: block; }
+.clinic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+.treatment {
+  background: white;
+  border: 1px solid #f2e4ea;
+  padding: 25px;
+  border-radius: 18px;
+}
+.treatment-icon {
+  height: 65px;
+  width: 65px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--light-pink);
+  color: var(--pink);
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+.treatment p { color: var(--muted); line-height: 1.7; font-size: 14px; }
+.treatment button { margin-top: 8px; }
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  border-bottom: 1px solid #f2e4ea;
+  padding: 15px 0;
+}
+.cart-item p { color: var(--muted); font-size: 13px; }
+.cart-total { text-align: right; font-size: 20px; font-weight: bold; margin: 25px 0; }
+.empty { color: var(--muted); padding: 35px 0; }
+footer {
+  padding: 30px 6%;
+  background: #35242c;
+  color: white;
+  line-height: 1.8;
+  text-align: center;
+}
+.notice { color: var(--muted); font-size: 13px; line-height: 1.7; }
+@media(max-width:600px) {
+  header { position: static; }
+  .hero { padding: 40px 6%; }
+  .hero-art { font-size: 65px; }
+  main { padding: 28px 5%; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .product img { height: 155px; }
+  .product-body { padding: 12px; }
+  .product h3 { font-size: 14px; }
+  .product .price { font-size: 15px; }
+  .product button { padding: 10px 7px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AS Beauty Store</div>
+  <nav>
+    <button onclick="showPage('home')">Beranda</button>
+    <button onclick="showPage('products')">Produk</button>
+    <button onclick="showPage('clinic')">Beauty Clinic</button>
+    <button onclick="showPage('cart')">🛒 Keranjang (<span id="cart-count">0</span>)</button>
+  </nav>
+</header>
+
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <span class="tag">WELCOME TO AS BEAUTY STORE</span>
+    <h1>Temukan Kecantikan Versi Terbaikmu</h1>
+    <p>Temukan pilihan skincare dan makeup dari Emina, Dior, Glad2Glow, dan Make Over. Pilih produk favoritmu dan lengkapi kebutuhan kecantikanmu.</p>
+    <button class="primary" onclick="showPage('products')">Jelajahi Produk →</button>
+  </div>
+  <div class="hero-art">🌸💄</div>
+</section>
+
+<main>
+  <section class="page active" id="home">
+    <div class="section-heading">
+      <h2>✨ Pilihan Produk</h2>
+      <p>Produk pilihan untuk rutinitas kecantikanmu.</p>
+    </div>
+    <div class="grid" id="featured-products"></div>
+    <p style="text-align:center;margin-top:25px">
+      <button class="primary" onclick="showPage('products')">Lihat Semua Produk</button>
+    </p>
+  </section>
+
+  <section class="page" id="products">
+    <div class="section-heading">
+      <h2>Katalog Produk</h2>
+      <p>Temukan produk yang sesuai dengan kebutuhanmu.</p>
+    </div>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Cari nama produk atau brand..." oninput="renderProducts()">
+      <select id="category" onchange="renderProducts()">
+        <option value="all">Semua kategori</option>
+        <option value="skincare">Skincare</option>
+        <option value="makeup">Makeup</option>
+      </select>
+      <select id="brand" onchange="renderProducts()">
+        <option value="all">Semua brand</option>
+        <option value="Emina">Emina</option>
+        <option value="Dior">Dior</option>
+        <option value="Glad2Glow">Glad2Glow</option>
+        <option value="Make Over">Make Over</option>
+      </select>
+    </div>
+    <div class="grid" id="product-grid"></div>
+    <p class="notice">Harga merupakan harga yang tercantum pada katalog ini dan dapat disesuaikan oleh pengelola toko.</p>
+  </section>
+
+  <section class="page" id="clinic">
+    <div class="section-heading">
+      <h2>🌷 AS Beauty Clinic</h2>
+      <p>Kenali pilihan perawatan kecantikan berikut.</p>
+    </div>
+    <div class="clinic-grid" id="clinic-grid"></div>
+    <p class="notice">Informasi ini bersifat umum. Konsultasikan kebutuhan kulit kepada tenaga profesional sebelum memilih perawatan.</p>
+  </section>
+
+  <section class="page" id="cart">
+    <div class="section-heading">
+      <h2>🛒 Keranjang Belanja</h2>
+      <p>Periksa produk pilihanmu sebelum melanjutkan.</p>
+    </div>
+    <div id="cart-items"></div>
+    <div id="cart-summary"></div>
+    <button onclick="showPage('products')">← Kembali Belanja</button>
+    <button class="primary" onclick="checkout()">Lanjutkan Pesanan</button>
+    <p class="notice">Tombol pesanan menampilkan ringkasan pesanan. Website ini belum terhubung ke pembayaran online.</p>
+  </section>
+</main>
+
+<footer>
+  <strong>AS Beauty Store</strong><br>
+  Your Beauty, Your Confidence 🌸<br>
+  Skincare • Makeup • Beauty Clinic
+</footer>
+
+<script>
+const PRODUCTS = [
+  {
+    id:'em1', brand:'Emina', name:'Bright Stuff Face Wash',
+    category:'skincare', type:'Cleanser', price:22000,
+    icon:'🧴',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcbi3lOyijcOdEljCyaxkxfi3O24eF_bUzqKzJOu0I4g&s=10',
+    desc:'Pembersih wajah untuk membersihkan kotoran dan menyegarkan kulit.'
+  },
+  {
+    id:'em2', brand:'Emina', name:'Sun Battle SPF 30 PA+++',
+    category:'skincare', type:'Sunscreen', price:35000,
+    icon:'☀️',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpBLovYoD2ygRHJXlgV22GlwvnRGg91L9uWwXanYnWEg&s=10',
+    desc:'Tabir surya untuk membantu melindungi kulit dari paparan sinar matahari.'
+  },
+  {
+    id:'em3', brand:'Emina', name:'Glossy Stain',
+    category:'makeup', type:'Lip Tint', price:39000,
+    icon:'💄',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0Y8l1gAlZDm0JJQEYAx-w476Sy_ab623QLpicAsFA_Q&s=10',
+    desc:'Pewarna bibir dengan tampilan glossy.'
+  },
+  {
+    id:'di1', brand:'Dior', name:'Forever Skin Glow Foundation',
+    category:'makeup', type:'Foundation', price:850000,
+    icon:'✨',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfAX-TkifjviMksyHMqxWrJE7WZpKe-qHD-NLzntD1g&s',
+    desc:'Foundation dengan hasil akhir bercahaya.'
+  },
+  {
+    id:'di2', brand:'Dior', name:'Addict Lip Maximizer',
+    category:'makeup', type:'Lip Gloss', price:520000,
+    icon:'💋',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_J8fD9V332IDJ1ODM1-AEu92r12o4KNSM1X21_F8udw&s',
+    desc:'Lip gloss untuk tampilan bibir berkilau.'
+  },
+  {
+    id:'di3', brand:'Dior', name:'Prestige La Crème',
+    category:'skincare', type:'Face Cream', price:3250000,
+    icon:'🫙',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHfVlYP8xPJ-Toc-hcT1HZXR-cw5DSKkNUD0f9QgXqg&s=10',
+    desc:'Krim perawatan wajah premium.'
+  },
+  {
+    id:'gg1', brand:'Glad2Glow',
+    name:'Centella Allantoin Soothing Gel Moisturizer',
+    category:'skincare', type:'Moisturizer', price:65000,
+    icon:'🌿',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmZqNF7uTYIoJca5MAFRt1nNOGyaVn0EshhuBicAmKsQ&s=10',
+    desc:'Gel pelembap untuk membantu menjaga kelembapan kulit.'
+  },
+  {
+    id:'gg2', brand:'Glad2Glow',
+    name:'Real Mugwort Salicylic Acid Acne Clay Stick',
+    category:'skincare', type:'Clay Stick', price:55000,
+    icon:'🌱',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQi_fFkPEwTTmSCrRxyEtsRJiyGSff8U4ORHzHS6Way0g&s=10',
+    desc:'Clay stick untuk membantu merawat kulit berminyak.'
+  },
+  {
+    id:'gg3', brand:'Glad2Glow',
+    name:'Ultra Light Daily Sunscreen SPF 50 PA++++',
+    category:'skincare', type:'Sunscreen', price:75000,
+    icon:'☀️',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFPy3IjMQmE_OlUJMIeH74_7zrCiHvNEKOkP-DLnKyyw&s=10',
+    desc:'Tabir surya untuk pemakaian sehari-hari.'
+  },
+  {
+    id:'mo1', brand:'Make Over',
+    name:'Powerstay 24H Matte Powder Foundation',
+    category:'makeup', type:'Powder Foundation', price:165000,
+    icon:'🪞',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdtaJDZECh7I9Ax93ZkRbDocldOzhOVlmyrTruGJ4Tyg&s=10',
+    desc:'Powder foundation dengan hasil akhir matte.'
+  },
+  {
+    id:'mo2', brand:'Make Over',
+    name:'Powerstay Transferproof Matte Lip Cream',
+    category:'makeup', type:'Lip Cream', price:89000,
+    icon:'💄',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVdvQJniAf9-7nnLePPedsLTL0M6YRA2wQHsFnhohHSw&s=10',
+    desc:'Lip cream dengan hasil akhir matte.'
+  },
+  {
+    id:'mo3', brand:'Make Over',
+    name:'Velvet Mattifying Primer',
+    category:'makeup', type:'Primer', price:135000,
+    icon:'✨',
+    photo:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfjZlkqVwdUn6dlkRMjA81awlF_nNiMs9R6fY-y1VWLQ&s=10',
+    desc:'Primer untuk membantu mempersiapkan kulit sebelum makeup.'
+  }
+];
+
+const TREATMENTS = [
+  {
+    icon:'💧',
+    name:'Hydrating Facial',
+    desc:'Perawatan wajah yang berfokus pada kebersihan dan kelembapan kulit.'
+  },
+  {
+    icon:'🧪',
+    name:'Skin Consultation',
+    desc:'Konsultasi untuk mengenali kebutuhan dan rutinitas perawatan kulit.'
+  },
+  {
+    icon:'🛡️',
+    name:'Skin Barrier Care',
+    desc:'Perawatan yang berfokus pada pemeliharaan lapisan pelindung kulit.'
+  },
+  {
+    icon:'🌬️',
+    name:'Calming Treatment',
+    desc:'Pilihan perawatan yang berfokus pada kenyamanan kulit.'
+  },
+  {
+    icon:'✨',
+    name:'Brightening Care',
+    desc:'Perawatan untuk membantu kulit tampak lebih cerah dan merata.'
+  },
+  {
+    icon:'🕰️',
+    name:'Skin Rejuvenation',
+    desc:'Konsultasi perawatan untuk mendukung kesehatan kulit.'
+  },
+  {
+    icon:'🌸',
+    name:'Professional Treatment',
+    desc:'Pilihan perawatan yang perlu disesuaikan dengan kondisi kulit.'
+  },
+  {
+    icon:'😊',
+    name:'Personal Beauty Plan',
+    desc:'Rencana perawatan kecantikan yang disesuaikan dengan kebutuhan.'
+  }
+];
+
+let cart = [];
+
+function formatRupiah(value) {
+  return new Intl.NumberFormat('id-ID', {
+    style:'currency', currency:'IDR', maximumFractionDigits:0
+  }).format(value);
+}
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  const selected = document.getElementById(page);
+  if (selected) selected.classList.add('active');
+
+  document.getElementById('hero').style.display =
+    page === 'home' ? 'flex' : 'none';
+
+  if (page === 'products') renderProducts();
+  if (page === 'cart') renderCart();
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function productCard(product) {
+  return `
+    <article class="product">
+      <img
+        src="${product.photo}"
+        alt="${product.brand} ${product.name}"
+        loading="lazy"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+      >
+      <div style="display:none;text-align:center;padding:45px 10px;font-size:48px;background:#fff7fa">
+        ${product.icon}
+      </div>
+      <div class="product-body">
+        <span class="brand">${product.brand}</span>
+        <h3>${product.name}</h3>
+        <span class="tag">${product.category}</span>
+        <p>${product.desc}</p>
+        <div class="price">${formatRupiah(product.price)}</div>
+        <button class="primary" onclick="addToCart('${product.id}')">
+          + Tambah ke Keranjang
+        </button>
+      </div>
+    </article>`;
+}
+
+function renderProducts() {
+  const search = (document.getElementById('search')?.value || '').toLowerCase();
+  const category = document.getElementById('category')?.value || 'all';
+  const brand = document.getElementById('brand')?.value || 'all';
+
+  const filtered = PRODUCTS.filter(p => {
+    const matchesSearch = (p.name + ' ' + p.brand).toLowerCase().includes(search);
+    return matchesSearch &&
+      (category === 'all' || p.category === category) &&
+      (brand === 'all' || p.brand === brand);
+  });
+
+  document.getElementById('product-grid').innerHTML = filtered.length
+    ? filtered.map(productCard).join('')
+    : '<p class="empty">Produk tidak ditemukan.</p>';
+}
+
+function renderFeatured() {
+  document.getElementById('featured-products').innerHTML =
+    PRODUCTS.slice(0,4).map(productCard).join('');
+}
+
+function addToCart(id) {
+  const product = PRODUCTS.find(p => p.id === id);
+  if (!product) return;
+
+  const existing = cart.find(item => item.id === id);
+  if (existing) existing.qty++;
+  else cart.push({...product, qty:1});
+
+  updateCartCount();
+  alert(product.name + ' ditambahkan ke keranjang!');
+}
+
+function updateCartCount() {
+  const count = cart.reduce((total, item) => total + item.qty, 0);
+  document.getElementById('cart-count').textContent = count;
+}
+
+function changeQty(id, amount) {
+  const item = cart.find(p => p.id === id);
+  if (!item) return;
+  item.qty += amount;
+  if (item.qty <= 0) cart = cart.filter(p => p.id !== id);
+  updateCartCount();
+  renderCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(p => p.id !== id);
+  updateCartCount();
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById('cart-items');
+  const summary = document.getElementById('cart-summary');
+
+  if (!cart.length) {
+    container.innerHTML = '<p class="empty">Keranjangmu masih kosong. Yuk, pilih produk favoritmu!</p>';
+    summary.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div>
+        <strong>${item.name}</strong>
+        <p>${item.brand} · ${formatRupiah(item.price)}</p>
+        <button onclick="changeQty('${item.id}',-1)">−</button>
+        <strong style="padding:0 10px">${item.qty}</strong>
+        <button onclick="changeQty('${item.id}',1)">+</button>
+      </div>
+      <div style="text-align:right">
+        <strong>${formatRupiah(item.price * item.qty)}</strong><br><br>
+        <button onclick="removeFromCart('${item.id}')">Hapus</button>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  summary.innerHTML = `<div class="cart-total">Total: ${formatRupiah(total)}</div>`;
+}
+
+function checkout() {
+  if (!cart.length) {
+    alert('Keranjang masih kosong!');
+    return;
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const details = cart.map(item =>
+    `${item.name} x${item.qty} = ${formatRupiah(item.price * item.qty)}`
+  ).join('\n');
+
+  alert('RINGKASAN PESANAN\n\n' + details +
+    '\n\nTotal: ' + formatRupiah(total) +
+    '\n\nIni demo website. Hubungkan layanan pembayaran atau WhatsApp untuk menerima pesanan sungguhan.');
+}
+
+function renderClinic() {
+  document.getElementById('clinic-grid').innerHTML = TREATMENTS.map((t, i) => `
+    <article class="treatment">
+      <div class="treatment-icon">${t.icon}</div>
+      <h3>${t.name}</h3>
+      <p>${t.desc}</p>
+      <button onclick="bookTreatment('${t.name.replace(/'/g, "\\'")}')">
+        Pilih Perawatan
+      </button>
+    </article>
+  `).join('');
+}
+
+function bookTreatment(name) {
+  alert('Kamu memilih ' + name +
+    '. Silakan hubungi pengelola klinik untuk konsultasi dan pemesanan.');
+}
+
+renderFeatured();
+renderProducts();
+renderClinic();
+updateCartCount();
+</script>
+</body>
+</html>
